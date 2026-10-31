@@ -202,10 +202,11 @@ function cartPage(){
  <h2>${ed?"✏️ تعديل الطلب #"+sid(editId):"🛒 سلتك"}</h2>
  <div class="card">${ks.length?ks.map(k=>{const x=cart[k];return `<div class="row"><span>${esc(x.n)} <span class="sz">${esc(x.l)}</span><br><span class="mut">${x.q} × ${x.p} = ${x.q*x.p} ج</span></span><div class="qty"><button onclick="cq('${k}',1)">+</button><b>${x.q}</b><button onclick="cq('${k}',-1)">−</button></div></div>`}).join(""):'<div class="mut center">السلة فاضية، ارجع للمنيو وضيف أصناف</div>'}
  <div class="tot"><span>الإجمالي</span><span>${c.t} جنيه</span></div></div>
- <div class="seg"><button class="${type==="in"?"on":""}" onclick="type='in';render()">🍽️ داخل المطعم</button><button class="${type==="del"?"on":""}" onclick="type='del';render()">🛵 توصيل</button></div>
+ <div class="seg"><button class="${type==="in"?"on":""}" onclick="setType('in')">🍽️ داخل المطعم</button><button class="${type==="del"?"on":""}" onclick="setType('del')">🛵 توصيل</button></div>
  <div class="stack">${type==="in"?inp("tbl","رقم الطاولة",'inputmode="numeric"'):inp("nm","الاسم")+inp("ph","رقم الموبايل",'inputmode="tel"')+`<textarea id="ad" rows="2" placeholder="العنوان بالتفصيل" oninput="f.ad=this.value">${esc(f.ad)}</textarea>`}
  <div id="pb">${payHtml()}</div><textarea id="nt" rows="2" placeholder="ملاحظات (اختياري)" oninput="f.nt=this.value">${esc(f.nt)}</textarea><div class="err" id="er">${esc(msg)}</div>
  <button class="btn g" style="padding:14px;font-size:17px" onclick="${ed?"saveEdit()":"send()"}">${ed?"حفظ التعديلات":"إرسال الطلب للكاشير"}</button>${ed?'<button class="btn o" onclick="cancelEdit()">إلغاء التعديل</button>':""}</div></main>`}
+function setType(t){type=t;render()}
 function cq(k,d){const x=cart[k];if(!x)return;x.q+=d;if(x.q<=0)delete cart[k];if(!Object.keys(cart).length&&!editId){leaveCart();return}render()}
 function chk(){
  if(!Object.keys(cart).length)return"السلة فاضية";
